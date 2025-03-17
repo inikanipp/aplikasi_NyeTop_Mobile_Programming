@@ -22,6 +22,7 @@ flutter:
   assets:
     - assets/images/logo.png
     - assets/images/onBoard1.png
+    - assets/images/google_icon.png
 
 flutter_native_splash:
   color: "#060a56" 

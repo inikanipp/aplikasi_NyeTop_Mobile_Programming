@@ -90,11 +90,18 @@ class SecondPage extends StatelessWidget {
             width: double.infinity,
             // color: Colors.yellow,
             margin: EdgeInsets.only(left: 20, right: 20, top: 18),
-            decoration: BoxDecoration(
-                color: Color(0xFFF0F0F0),
-                border: Border.all(color: Color(0xFFF0F0F0)),
-                borderRadius: BorderRadius.all(Radius.circular(26))
-              ),
+            child: ElevatedButton(onPressed: (){},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset("assets/images/google_icon.png"),
+                SizedBox(width: 16,),
+                Text("Continue With Google", style: GoogleFonts.poppins(
+                  textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Color(0XFFA9A4A4))
+                ),)
+              ],
+            )
+            ),
           ),
 
           Container(
