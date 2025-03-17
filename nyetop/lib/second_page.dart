@@ -81,7 +81,7 @@ class SecondPage extends StatelessWidget {
             child: Text("Or Continue With", style: GoogleFonts.poppins(textStyle: TextStyle(
               color: Colors.black,
               fontSize: 16,
-              fontWeight: FontWeight.w700
+              fontWeight: FontWeight.w600
             )),),
           ),
 
