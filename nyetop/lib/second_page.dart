@@ -110,10 +110,22 @@ class SecondPage extends StatelessWidget {
             height: 30,
             width: double.infinity,
             // color: Colors.green,
-            child: Text("Sudah punya akun? Masuk sekarang",
-            style: GoogleFonts.poppins(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              Text("Don’t have an account yet? ", style: GoogleFonts.poppins(
               textStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w400)
-            ),),
+            )),
+              InkWell(
+              onTap: () {
+                  Navigator.pushNamed(context, "write your route");
+              },
+              child: Text("Click Here", style: GoogleFonts.poppins(
+              textStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)
+            ),
+            ),
+          )
+            ],),
           ),
         ],
       )
