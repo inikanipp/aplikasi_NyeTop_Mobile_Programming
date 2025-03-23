@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,9 +6,11 @@ import 'third_page.dart';
 class SecondPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return GestureDetector(
+      onTap: () {
+      FocusScope.of(context).unfocus(); // Unfocus semua TextField
+      },
+      child: Scaffold(
         appBar: AppBar(
         leading: IconButton(
         icon: SvgPicture.asset(
