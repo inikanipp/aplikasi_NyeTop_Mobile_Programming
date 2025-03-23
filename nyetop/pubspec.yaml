@@ -27,6 +27,7 @@ flutter:
     - assets/images/google_icon.png
     - assets/images/lock.svg
     - assets/images/profile.svg
+    - assets/images/maki_arrow.svg
 
 flutter_native_splash:
   color: "#060a56" 

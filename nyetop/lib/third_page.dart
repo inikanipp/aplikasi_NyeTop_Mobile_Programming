@@ -2,13 +2,26 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'second_page.dart';
 
 class ThirdPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+        leading: IconButton(
+        icon: SvgPicture.asset(
+                  'assets/images/maki_arrow.svg',
+                  width: 24,
+                  height: 24,
+                  ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        ),
+        ),
         body: Column(
           children: [
             SizedBox(
@@ -38,6 +51,7 @@ class ThirdPage extends StatelessWidget{
             SizedBox(
               height: 24,
             ),
+
             Container(
               height: 52,
               padding: EdgeInsets.only(left: 30, right: 30),
@@ -116,11 +130,8 @@ class ThirdPage extends StatelessWidget{
               )
             ),
 
-            Container(
-              padding: EdgeInsets.only(left: 30, right: 30),
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(top: 24, bottom: 24),
-              child: Text( "Forgot Password ?"),
+            SizedBox(
+              height: 24,
             ),
 
             Container(
@@ -187,7 +198,7 @@ class ThirdPage extends StatelessWidget{
                               children: [
                                 Image.asset("assets/images/google_icon.png"),
                                 SizedBox(width: 16,),
-                                Text("Sign In With Google", style: GoogleFonts.poppins(
+                                Text("Sign Up With Google", style: GoogleFonts.poppins(
                                     textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black)
                                 ))
                               ],
@@ -198,10 +209,9 @@ class ThirdPage extends StatelessWidget{
                 ],
               ),
             ),
-            SizedBox(
-              height: 120,
-            ),
+            Spacer(),
             Container(
+              padding: EdgeInsets.only(bottom: 20),
               width: double.infinity,
               // color: Colors.green,
               child: Row(
@@ -212,7 +222,7 @@ class ThirdPage extends StatelessWidget{
                       ),),
                   InkWell(
                     onTap: () {
-                        Navigator.pushNamed(context, "write your route");
+                        Navigator.pop(context);
                     },
                     child: Text("Login now", style: GoogleFonts.poppins(
                     textStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 14)

@@ -9,8 +9,10 @@ void main() {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ThirdPage() ,
-      // home : SecondPage()
+      // home: ThirdPage() ,
+      // home : SecondPage(),
+      // home: FourtPage(),
+      home: FirstPage(),
     )
   );
 } 
