@@ -6,9 +6,12 @@ import 'second_page.dart';
 class ThirdPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return GestureDetector(
+      // debugShowCheckedModeBanner: false,
+       onTap: () {
+      FocusScope.of(context).unfocus(); // Unfocus semua TextField
+      },
+      child: Scaffold(
         appBar: AppBar(
         leading: IconButton(
         icon: SvgPicture.asset(
