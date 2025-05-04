@@ -3,19 +3,17 @@ import 'package:nyetop/third_page.dart';
 import 'first_page.dart';
 import 'second_page.dart';
 import 'home_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'service/firebase_service.dart';
 
 // import 'package:google_fonts/google_fonts.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // home: ThirdPage() ,
-      // home : SecondPage(),
-      // home: FourtPage(),
-      home: FirstPage(),
-      // home : HomePage (),
-    )
-  );
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MaterialApp(
+    home: wrapper(),
+    // home: HomePage(),
+  ));
 } 
 

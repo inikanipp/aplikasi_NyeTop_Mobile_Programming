@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'second_page.dart';
 
-void main() => runApp(LaptopRentalApp());
+
 
 class LaptopRentalApp extends StatelessWidget {
   @override
@@ -24,7 +26,13 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.notifications),
-            onPressed: () {},
+            onPressed: ()async{
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => SecondPage()),
+              );
+            },
           )
         ],
       ),
@@ -85,7 +93,13 @@ class HomePage extends StatelessWidget {
               color: Colors.blue.shade100,
             ),
             child: Center(
-              child: Text("Promo Spesial! Sewa 3 hari, gratis 1 hari!", textAlign: TextAlign.center),
+              child: ElevatedButton(onPressed: ()async{
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => SecondPage()),
+              );
+              }, child:Text("logout")),
             ),
           ),
         ],
