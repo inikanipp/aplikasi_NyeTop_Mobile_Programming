@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "462337687023",
-    "project_id": "dbsignupnyetop",
-    "storage_bucket": "dbsignupnyetop.firebasestorage.app"
+    "project_number": "770736276151",
+    "firebase_url": "https://nyetop-59228-default-rtdb.firebaseio.com",
+    "project_id": "nyetop-59228",
+    "storage_bucket": "nyetop-59228.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:462337687023:android:56e2aca81dd40ea2b7ca1a",
+        "mobilesdk_app_id": "1:770736276151:android:d844fc7b63d24d1865c332",
         "android_client_info": {
           "package_name": "com.example.nyetop"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB-R3dOpNAxURqPtCVzttm67oMORcMVlIk"
+          "current_key": "AIzaSyBrXSXucF-7JCH3Kb2lDS259B4RhX6fLjM"
         }
       ],
       "services": {

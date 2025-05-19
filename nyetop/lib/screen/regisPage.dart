@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'second_page.dart';
-import 'home_page.dart';
+// import 'loginPage.dart';
+import 'homePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../service/apiService.dart';
+import 'mainPage.dart';
 
 class ThirdPage extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class _ThirdPageState extends State<ThirdPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final ApiService iniApi = ApiService();
   String ? _username;
   String ? _password;
 
@@ -35,9 +38,14 @@ class _ThirdPageState extends State<ThirdPage> {
               .createUserWithEmailAndPassword(email: _username!, password: _password!);
 
           print("User registered: ${userCredential.user!.email}");
+          String uid = userCredential.user!.uid;
+
+          await iniApi.createUser(uid);
+
+          print('UID: $uid');
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => HomePage()),
+            MaterialPageRoute(builder: (context) => mainPage(id_user: uid,)),
           );
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {

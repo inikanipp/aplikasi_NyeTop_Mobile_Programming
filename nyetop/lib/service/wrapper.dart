@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../first_page.dart';
-import '../home_page.dart';
+import 'package:nyetop/screen/mainPage.dart';
+import '../screen/loginPage.dart';
+import '../screen/homePage.dart';
 
 class wrapper extends StatefulWidget {
   const wrapper({super.key});
@@ -18,9 +19,12 @@ class _wrapper extends State<wrapper> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot){
           if(snapshot.hasData){
-            return HomePage();
+            final user = snapshot.data as User;
+            final uid = user.uid;
+            print('User ID: $uid');
+            return mainPage(id_user: uid);
           }else{
-            return FirstPage();
+            return Loginpage();
           }
         }
       ),

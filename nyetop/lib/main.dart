@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:nyetop/third_page.dart';
-import 'first_page.dart';
-import 'second_page.dart';
-import 'home_page.dart';
+import 'package:nyetop/screen/homePage.dart';
+import 'screen/onboarding.dart';
+import 'screen/yourItems.dart';
+import 'screen/addItems.dart';
+import 'package:nyetop/screen/detailPage.dart';
+import 'screen/mainPage.dart';
+import 'service/wrapper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'service/firebase_service.dart';
 
-// import 'package:google_fonts/google_fonts.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MaterialApp(
-    home: wrapper(),
-    // home: HomePage(),
-  ));
-} 
+  runApp(MainApp());
+}
 
+
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: wrapper()
+    );
+  }
+}
