@@ -17,7 +17,7 @@ class _navBarState extends State<navBar> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(32),
+        // borderRadius: BorderRadius.circular(32),
         color: Color(0xFF060A56),
       ),
       width: double.maxFinite,

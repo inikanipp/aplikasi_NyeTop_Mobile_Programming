@@ -87,12 +87,13 @@ class _addItemsState extends State<addItems> {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
 
-                      await firestore.collection('laptops').doc(widget.idUser).set({
+                      await firestore.collection('laptops').add({
                         'nama': namaItem,
                         'jenis': deskripsiItem,
                         'harga': deskripsiItem,
                         'lokasi': deskripsiItem,
                         'deskripsi': deskripsiItem,
+                        'user' : widget.idUser
                       });
 
                       print("Nama Item: $namaItem");

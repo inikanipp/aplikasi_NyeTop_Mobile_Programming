@@ -15,3 +15,27 @@ class catatanApi {
     );
   }
 }
+
+
+
+class Image {
+  final String id;
+  final String image;
+
+
+  Image({required this.id, required this.image});
+
+  factory Image.fromJson(Map<String, dynamic> json) {
+    return Image(
+      id: json['nim'],
+      image: json['nama'],
+    );
+  }
+
+  Map<String, dynamic> toJson(){
+    return {
+      'id' : id,
+      'image' : image,
+    };
+  }
+}

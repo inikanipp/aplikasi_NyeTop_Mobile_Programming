@@ -7,10 +7,12 @@ class cardLaptop extends StatefulWidget {
   final String judul;
   final String harga;
   final String deskripsi;
+  final Widget? imageWidget; 
   const cardLaptop({super.key,
     required this.judul,
     required this.harga,
-    required this.deskripsi
+    required this.deskripsi,
+    required this.imageWidget
   });
 
   @override
@@ -38,8 +40,11 @@ class _cardLaptopState extends State<cardLaptop> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
+            child: 
+            // widget.imageWidget??
+            Image.asset(
               'assets/images/laptop.jpg',
+              
               height: 164,
               width: double.maxFinite,
               fit: BoxFit.cover,
@@ -47,40 +52,55 @@ class _cardLaptopState extends State<cardLaptop> {
           ),
           SizedBox(height: 3,),
           Expanded(
-            child:  Container(
-              // color: Colors.lightBlueAccent,
-              width: double.maxFinite,
-              height: double.maxFinite,
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(widget.judul, style: GoogleFonts.poppins(
-                          fontSize:14,
-                          fontWeight: FontWeight.w700
-                        )
+  child: Container(
+    width: double.infinity,
+    // hilangkan height tetap agar konten bisa menyesuaikan
+    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Column judul + harga sekarang dibungkus Expanded agar tidak overflow
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                widget.judul,
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+                SizedBox(height: 2),
+                Text(
+                  widget.harga,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+
+        // Icon save tetap di sebelah kanan
+                  Container(
+                    alignment: Alignment.topRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        print("amann");
+                      },
+                      child: SvgPicture.asset(
+                        "assets/icons/nonactive/save.svg",
                       ),
-                      Text(widget.harga)
-                    ],
+                    ),
                   ),
-                  Expanded(
-                    child: Container(
-                      alignment: AlignmentDirectional.topEnd,
-                      padding: EdgeInsets.all(0),
-                      child: GestureDetector(
-                        onTap: () {
-                          print("amann");
-                        },
-                        child: SvgPicture.asset("assets/icons/nonactive/save.svg"),
-                      )
-                    )
-                  ),
-                  
                 ],
               ),
-            )
-          )
+            ),
+          ),
+
           
         ],
       ),

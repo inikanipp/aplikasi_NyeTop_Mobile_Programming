@@ -28,7 +28,7 @@ class _mainPageState extends State<mainPage> {
   }
 
   List<Widget> get pages => [
-    HomePage(id_user: idUser,),
+    HomePage(id_user: idUser, imageId: idUser.toString(),),
     // addItems(),
     yourItems(idUser: idUser,)
     // iniList(),
@@ -38,7 +38,7 @@ class _mainPageState extends State<mainPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.green,
+      // color: Colors.yellow,
       child: Stack(
         children: [
           pages[currentIndex],

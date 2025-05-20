@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'regisPage.dart';
+import 'mainPage.dart';
 import 'homePage.dart';
 
 class Loginpage extends StatefulWidget {
@@ -42,7 +43,7 @@ class _LoginpageState extends State<Loginpage> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage(id_user: uid!,)),
+        MaterialPageRoute(builder: (context) => mainPage(id_user: uid!,)),
       );
     } catch (e) {
       print('Error: $e');
@@ -71,7 +72,7 @@ class _LoginpageState extends State<Loginpage> {
                     Navigator.of(context).pop(); // Close the dialog
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage(id_user: uid!,))
+                      MaterialPageRoute(builder: (context) => HomePage(id_user: uid!,imageId: uid.toString(),))
                     );
                   },
                   child: Text("OK"),

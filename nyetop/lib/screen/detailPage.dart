@@ -197,7 +197,7 @@ class Detailpage extends StatelessWidget {
               margin: EdgeInsets.only(top: 8, left: 8, right: 8),
               // color: Colors.green,
               width: double.maxFinite,
-              height: 45,
+              height: 60,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -207,6 +207,7 @@ class Detailpage extends StatelessWidget {
                     fontWeight: FontWeight.w500
                     ),
                   ),
+                  // Container(color: Colors.red,height: 10,),
                   Text(harga,
                   style: GoogleFonts.poppins(
                     fontSize: 14,

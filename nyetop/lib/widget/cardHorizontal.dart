@@ -21,6 +21,7 @@ class _CardhorizontalState extends State<Cardhorizontal> {
   @override
   Widget build(BuildContext context) {
     return  Container(
+      margin: EdgeInsets.only(top: 8),
       padding: EdgeInsets.all(10),
       width: double.maxFinite,
       height: 150,
@@ -56,21 +57,21 @@ class _CardhorizontalState extends State<Cardhorizontal> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Asus Vivobook",
+                  Text(widget.judul,
                     style: GoogleFonts.poppins(
                       fontSize: 22,
                       fontWeight: FontWeight.w600
                     ),
                   ),
                   // SizedBox(height: 4,),
-                  Text("Laptop Bisnis",
+                  Text(widget.judul,
                     style: GoogleFonts.poppins(
                       fontSize: 12,
                       fontWeight: FontWeight.w400
                     ),
                   ),
                   SizedBox(height: 4,),
-                  Text("Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus.",
+                  Text(widget.deskripsi,
                     style: GoogleFonts.poppins(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
@@ -92,7 +93,7 @@ class _CardhorizontalState extends State<Cardhorizontal> {
                             ),
                           ),
                           onPressed: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=> Detailpage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> Detailpage(nama: widget.judul,harga: widget.harga, deskripsi: widget.deskripsi,)));
                           },
                           child: Text(
                             "Pilih",
