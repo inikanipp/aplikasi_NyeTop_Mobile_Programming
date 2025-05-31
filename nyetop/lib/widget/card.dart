@@ -24,7 +24,7 @@ class _cardLaptopState extends State<cardLaptop> {
   Widget build(BuildContext context) {
     return  GestureDetector(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> Detailpage(nama: widget.judul, harga: widget.harga,deskripsi: widget.deskripsi,)));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> Detailpage(nama: widget.judul, harga: widget.harga,deskripsi: widget.deskripsi,imageWidget: widget.imageWidget,)));
       },
       child: Container(
       padding: EdgeInsets.all(10),
@@ -39,27 +39,26 @@ class _cardLaptopState extends State<cardLaptop> {
       child: Column(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: 
-            // widget.imageWidget??
-            Image.asset(
-              'assets/images/laptop.jpg',
-              
-              height: 164,
-              width: double.maxFinite,
+          borderRadius: BorderRadius.circular(8),
+          child: SizedBox(
+            width: double.infinity,
+            height: 120, // ukuran tinggi tetap
+            child: FittedBox(
               fit: BoxFit.cover,
+              clipBehavior: Clip.hardEdge,
+              child: widget.imageWidget,
             ),
           ),
+        ),
+
           SizedBox(height: 3,),
           Expanded(
   child: Container(
     width: double.infinity,
-    // hilangkan height tetap agar konten bisa menyesuaikan
     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Column judul + harga sekarang dibungkus Expanded agar tidak overflow
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

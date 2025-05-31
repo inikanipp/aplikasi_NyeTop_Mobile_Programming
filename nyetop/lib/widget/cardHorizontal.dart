@@ -93,14 +93,14 @@ class _CardhorizontalState extends State<Cardhorizontal> {
                             ),
                           ),
                           onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> Detailpage(nama: widget.judul,harga: widget.harga, deskripsi: widget.deskripsi,)));
+                            // Navigator.push(context, MaterialPageRoute(builder: (context)=> Detailpage(nama: widget.judul,harga: widget.harga, deskripsi: widget.deskripsi,)));
                           },
                           child: Text(
                             "Pilih",
                             style: GoogleFonts.poppins(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: Colors.white, // ✅ Tambahkan ini!
+                              color: Colors.white,
                             ),
                           ),
                         ),

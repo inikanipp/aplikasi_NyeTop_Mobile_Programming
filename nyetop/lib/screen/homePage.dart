@@ -8,7 +8,7 @@ import 'package:nyetop/widget/card.dart';
 import 'package:nyetop/widget/serachBar.dart';
 import 'package:nyetop/screen/addItems.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../service/image.dart';
+import '../service/imageService.dart';
 
 class HomePage extends StatefulWidget {
   final String id_user;
@@ -172,9 +172,11 @@ class _HomePageState extends State<HomePage> {
                           itemBuilder: (context, index) {
                             final data = laptops[index].data() as Map<String, dynamic>;
                             final String idGambar = data['user'];
+                            final String docId = laptops[index].id;
+                            print("ID UNIQ : $docId");
 
                             return FutureBuilder<Image?>(
-                              future: _imageService.fetchImageFromBase64(idGambar),
+                              future: _imageService.fetchGambar(docId),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState == ConnectionState.waiting) {
                                   return cardLaptop(

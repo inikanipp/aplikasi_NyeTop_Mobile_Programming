@@ -4,6 +4,8 @@ import 'package:nyetop/widget/addFile.dart';
 import 'package:nyetop/widget/cardHorizontal.dart';
 import 'addItems.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class yourItems extends StatefulWidget {
   final String idUser;
@@ -18,6 +20,7 @@ class yourItems extends StatefulWidget {
 
 class _yourItemsState extends State<yourItems> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  File? imageFile;
 
 
 
@@ -29,6 +32,18 @@ class _yourItemsState extends State<yourItems> {
 
     return snapshot.docs;
   }
+
+  Future<void> pickImage() async {
+  final picker = ImagePicker();
+  final picked = await picker.pickImage(source: ImageSource.gallery);
+  
+
+  if (picked != null) {
+    setState(() {
+      imageFile = File(picked.path);
+    });
+  }
+}
 
 
 
@@ -45,8 +60,9 @@ class _yourItemsState extends State<yourItems> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            addFile( navigation: (context) => Navigator.push(context, MaterialPageRoute(builder: (context)=> addItems(idUser: widget.idUser,) )),
-
+           AddFile(
+              imageFile: imageFile,
+              onTap: pickImage,
             ),
             SizedBox(height: 16),
             Text("Your Items",

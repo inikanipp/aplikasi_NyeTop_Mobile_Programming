@@ -8,10 +8,12 @@ class Detailpage extends StatelessWidget {
   final String nama;
   final String harga;
   final String deskripsi;
+  final Widget? imageWidget; 
   const Detailpage({super.key,
     required this.nama,
     required this.harga,
-    required this.deskripsi
+    required this.deskripsi,
+    required this.imageWidget
   
   });
 
@@ -21,7 +23,8 @@ class Detailpage extends StatelessWidget {
       appBar: AppBar(
         // backgroundColor: Colors.red,
       ),
-      body: Container(
+      body: SingleChildScrollView(
+        child: Container(
         color: Colors.white,
         width: double.infinity,
         padding: EdgeInsets.only(bottom: 10, right: 10, left: 10),
@@ -45,11 +48,7 @@ class Detailpage extends StatelessWidget {
                       Expanded(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.asset(
-                            'assets/images/laptop.jpg',
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
+                          child: imageWidget
                         ),
                       ),
                     ],
@@ -237,12 +236,12 @@ class Detailpage extends StatelessWidget {
                     fontWeight: FontWeight.w300,
                   
                     ),
-                    maxLines: 4,
+                    maxLines: 3,
                   )
                 ],
               ),
             ),
-            Spacer(),
+            // Spacer(),
             Container(
               width: double.maxFinite,
               height: 60,
@@ -264,6 +263,7 @@ class Detailpage extends StatelessWidget {
           ],
         ),
       ),
+      )
     );
   }
 }

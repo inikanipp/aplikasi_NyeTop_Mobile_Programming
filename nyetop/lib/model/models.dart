@@ -18,24 +18,16 @@ class catatanApi {
 
 
 
-class Image {
+class Gambar {
   final String id;
   final String image;
 
+  Gambar({required this.id, required this.image});
 
-  Image({required this.id, required this.image});
-
-  factory Image.fromJson(Map<String, dynamic> json) {
-    return Image(
-      id: json['nim'],
-      image: json['nama'],
+  factory Gambar.fromJson(Map<String, dynamic> json) {
+    return Gambar(
+      id: json['id'],
+      image: json['image'],
     );
-  }
-
-  Map<String, dynamic> toJson(){
-    return {
-      'id' : id,
-      'image' : image,
-    };
   }
 }

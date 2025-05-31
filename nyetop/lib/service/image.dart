@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import '../model/models.dart';
 
 
 class ImageService {
@@ -39,6 +39,18 @@ class ImageService {
     return Image.memory(bytes, fit: BoxFit.cover);
   } else {
     return null;
+  }
+}
+
+
+Future<List<Gambar>> fetchGambar(String id) async {
+  final response = await http.get(Uri.parse('http://192.168.1.12/php_nyetop/get_image.php?id=$id'));
+
+  if (response.statusCode == 200) {
+    List jsonResponse = json.decode(response.body);
+    return jsonResponse.map((data) => Gambar.fromJson(data)).toList();
+  } else {
+    throw Exception('Gagal memuat data');
   }
 }
 
