@@ -182,7 +182,7 @@ class _LoginpageState extends State<Loginpage> {
                         },
                         decoration: InputDecoration(
                           label: Text(
-                            "Input your Username",
+                            "Input your Email Adress",
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
                                 fontSize: 16,
