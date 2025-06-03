@@ -41,6 +41,16 @@ flutter:
     - assets/icons/nonactive/
     - assets/icons/active/
     - assets/images/
+    - assets/images/img_profile.png
+    - assets/icons/png/ic_edit_profile.png
+    - assets/icons/png/ic_logout.png
+    - assets/icons/png/ic_history.png
+    - assets/icons/nonactive/save.svg
+    - assets/icons/png/ic2_profile.png
+    - assets/icons/png/ic2_logout.png
+    - assets/icons/png/ic2_item.png
+    - assets/icons/png/ic2_wishlist.png
+    - assets/icons/png/ic2_history.png
 
 flutter_native_splash:
   color: "#060a56" 
