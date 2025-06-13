@@ -13,11 +13,7 @@ import '../service/imageService.dart';
 class HomePage extends StatefulWidget {
   final String id_user;
   final String imageId;
-  const HomePage({
-    super.key,
-    required this.id_user,
-    required this.imageId
-  });
+  const HomePage({super.key, required this.id_user, required this.imageId});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -47,6 +43,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Container(
+        margin: EdgeInsets.only(top: 40),
         padding: EdgeInsets.all(16),
         height: double.maxFinite,
         width: double.maxFinite,
@@ -63,13 +60,24 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: Row(
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(right: 16),
-                              height: double.maxFinite,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.green,
-                                shape: BoxShape.circle,
+                            GestureDetector(
+                              onTap: () {
+                                // print('gambar ditekan');
+                                Navigator.pushNamed(context, '/profile');
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(right: 16),
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                      'assets/images/img_profile.png',
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  shape: BoxShape.circle,
+                                ),
                               ),
                             ),
                             Text(
@@ -98,19 +106,26 @@ class _HomePageState extends State<HomePage> {
                         ),
                         child: IconButton(
                           onPressed: () async {
-                            await FirebaseAuth.instance.signOut();
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => Loginpage()),
-                            );
+                            // await FirebaseAuth.instance.signOut();
+                            // Navigator.pushReplacement(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => Loginpage(),
+                            //   ),
+                            // );
                           },
-                          icon: SvgPicture.asset("assets/icons/active/notif.svg"),
+                          icon: SvgPicture.asset(
+                            "assets/icons/active/notif.svg",
+                          ),
                           color: Colors.white,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
+
+                const SizedBox(height: 10),
+
                 Text(
                   "Temukan Laptop yang kamu butuhkan",
                   style: GoogleFonts.poppins(
@@ -118,6 +133,7 @@ class _HomePageState extends State<HomePage> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+                const SizedBox(height: 3),
                 Text(
                   "Dengan spesifikasi dan harga terbaik",
                   style: GoogleFonts.poppins(
@@ -126,6 +142,7 @@ class _HomePageState extends State<HomePage> {
                     color: Color(0xFFA1A1A1),
                   ),
                 ),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Expanded(child: searchBar()),
@@ -140,19 +157,27 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(32),
                           color: Color(0xFF060A56),
                         ),
-                        child: SvgPicture.asset("assets/icons/nonactive/filter.svg"),
+                        child: SvgPicture.asset(
+                          "assets/icons/nonactive/filter.svg",
+                        ),
                       ),
                     ),
                   ],
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(top: 16),
+                    padding: EdgeInsets.only(top: 1),
                     child: StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance.collection('laptops').snapshots(),
+                      stream:
+                          FirebaseFirestore.instance
+                              .collection('laptops')
+                              .snapshots(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: Image.asset("assets/images/load.gif"));
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: Image.asset("assets/images/load.gif"),
+                          );
                         }
 
                         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
@@ -163,14 +188,16 @@ class _HomePageState extends State<HomePage> {
 
                         return GridView.builder(
                           itemCount: laptops.length,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: 182 / 234,
-                          ),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 182 / 234,
+                              ),
                           itemBuilder: (context, index) {
-                            final data = laptops[index].data() as Map<String, dynamic>;
+                            final data =
+                                laptops[index].data() as Map<String, dynamic>;
                             final String idGambar = data['user'];
                             final String docId = laptops[index].id;
                             print("ID UNIQ : $docId");
@@ -178,12 +205,15 @@ class _HomePageState extends State<HomePage> {
                             return FutureBuilder<Image?>(
                               future: _imageService.fetchGambar(docId),
                               builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
                                   return cardLaptop(
                                     judul: data['nama'],
                                     harga: data['harga'].toString(),
                                     deskripsi: data['deskripsi'],
-                                    imageWidget: Center(child: CircularProgressIndicator()),
+                                    imageWidget: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
                                   );
                                 }
 
@@ -234,3 +264,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+// widget profile

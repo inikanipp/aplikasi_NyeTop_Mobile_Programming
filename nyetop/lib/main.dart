@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nyetop/screen/homePage.dart';
+import 'package:nyetop/screen/profilPage.dart';
+
+// import 'package:nyetop/screen/profil_page.dart';
+// import 'package:nyetop/screen/profile_page.dart';
 import 'screen/onboarding.dart';
 import 'screen/yourItems.dart';
 import 'screen/addItems.dart';
@@ -26,7 +30,10 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: wrapper()
+      home: wrapper(),
+      routes: {
+        '/profile': (context) => const ProfilPage(),
+      },
     );
   }
 }
