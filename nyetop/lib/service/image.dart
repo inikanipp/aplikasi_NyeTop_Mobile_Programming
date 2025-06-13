@@ -27,7 +27,7 @@ class ImageService {
 
   // Ambil gambar base64 dari server berdasarkan id
   Future<Image?> fetchImageFromBase64(String id) async {
-  final url = Uri.parse('http://192.168.1.12/php_nyetop/get_image.php?id=$id');
+  final url = Uri.parse('http://192.168.1.20/php_nyetop/get_image.php?id=$id');
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
