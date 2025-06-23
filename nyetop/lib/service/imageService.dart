@@ -8,7 +8,7 @@ import 'dart:io';
 class ImageService {
   Future<Image?> fetchGambar(String id) async {
   final response = await http.get(
-    Uri.parse('http://192.168.1.11/php_nyetop/get_image.php?id=$id'),
+    Uri.parse('http://192.168.1.29/php_nyetop/get_image.php?id=$id'),
   );
 
   if (response.statusCode == 200) {
@@ -26,7 +26,7 @@ class ImageService {
 
 
   Future<void> uploadImage(File imageFile, String idDoc) async {
-    var uri = Uri.parse("http://192.168.1.11/php_nyetop/post.php");
+    var uri = Uri.parse("http://192.168.1.29/php_nyetop/post.php");
 
     var request = http.MultipartRequest('POST', uri);
     request.fields['id'] = idDoc;

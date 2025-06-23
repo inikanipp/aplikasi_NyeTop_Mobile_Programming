@@ -84,26 +84,26 @@ class _CardhorizontalState extends State<Cardhorizontal> {
                       SizedBox(
                         width: 90,
                         height: 22,
-                        child: ElevatedButton(
-                          style:  ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF060A56),
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          onPressed: (){
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=> Detailpage(nama: widget.judul,harga: widget.harga, deskripsi: widget.deskripsi,)));
-                          },
-                          child: Text(
-                            "Pilih",
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        // child: ElevatedButton(
+                        //   style:  ElevatedButton.styleFrom(
+                        //     backgroundColor: Color(0xFF060A56),
+                        //     foregroundColor: Colors.white,
+                        //     shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(8),
+                        //     ),
+                        //   ),
+                        //   onPressed: (){
+                        //     // Navigator.push(context, MaterialPageRoute(builder: (context)=> Detailpage(nama: widget.judul,harga: widget.harga, deskripsi: widget.deskripsi,)));
+                        //   },
+                        //   child: Text(
+                        //     "Pilih",
+                        //     style: GoogleFonts.poppins(
+                        //       fontSize: 14,
+                        //       fontWeight: FontWeight.w400,
+                        //       color: Colors.white,
+                        //     ),
+                        //   ),
+                        // ),
                       )
                     ],
                   ) 

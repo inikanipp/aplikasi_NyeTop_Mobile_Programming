@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nyetop/widget/addFile.dart';
@@ -26,6 +25,7 @@ class _addItemsState extends State<addItems> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   String? namaItem;
+  String? jenisItem;
   String? hargaItem;
   String? deskripsiItem;
   String? currentAddress;
@@ -35,6 +35,7 @@ class _addItemsState extends State<addItems> {
     _formKey.currentState?.reset();
     setState(() {
       namaItem = null;
+      jenisItem = null;
       hargaItem = null;
       deskripsiItem = null;
       currentAddress = null;
@@ -133,6 +134,14 @@ class _addItemsState extends State<addItems> {
               SizedBox(height: 16),
               field(
                 line: 1,
+                name: "Jenis Item",
+                onSaved: (value) => jenisItem = value,
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Jenis item wajib diisi' : null,
+              ),
+              SizedBox(height: 16),
+              field(
+                line: 1,
                 name: "Harga",
                 onSaved: (value) => hargaItem = value,
                 validator: (value) =>
@@ -187,7 +196,7 @@ class _addItemsState extends State<addItems> {
                         // 1. Tambahkan data ke Firestore dan ambil doc.id
                         final docRef = await firestore.collection('laptops').add({
                           'nama': namaItem,
-                          'jenis': deskripsiItem,
+                          'jenis': jenisItem, // Sekarang menggunakan jenisItem yang terpisah
                           'harga': hargaItem,
                           'lokasi': currentAddress,
                           'deskripsi': deskripsiItem,

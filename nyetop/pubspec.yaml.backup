@@ -42,11 +42,8 @@ dependencies:
   provider: ^6.1.1
 
   # kirim ke wa 
-  # cloud_firestore: ^4.13.6
+  cloud_firestore: ^4.13.6
   url_launcher: ^6.2.2
-
-  # internet connectivity
-  connectivity_plus: ^5.0.2
   
 
 dev_dependencies:
