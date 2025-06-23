@@ -6,10 +6,13 @@ class Cardhorizontal extends StatefulWidget {
   final String judul;
   final String harga;
   final String deskripsi;
+  final Widget imageWidget;
+
   const Cardhorizontal({super.key,
     required this.judul,
     required this.harga,
-    required this.deskripsi
+    required this.deskripsi,
+    required this.imageWidget,
   
   });
 
@@ -42,12 +45,13 @@ class _CardhorizontalState extends State<Cardhorizontal> {
         children: [
             ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              'assets/images/laptop.jpg',
-              height: 130,
-              width: 130,
-              fit: BoxFit.cover,
-            ),
+            child: widget.imageWidget
+            // Image.asset(
+            //   'assets/images/laptop.jpg',
+            //   height: 130,
+            //   width: 130,
+            //   fit: BoxFit.cover,
+            // ),
           ),
           SizedBox(width: 10,),
           Expanded(

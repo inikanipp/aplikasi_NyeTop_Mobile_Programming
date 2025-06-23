@@ -9,6 +9,9 @@ import 'regisPage.dart';
 import 'mainPage.dart';
 import 'homePage.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Loginpage extends StatefulWidget {
   @override
@@ -25,14 +28,43 @@ class _LoginpageState extends State<Loginpage> {
   bool _isLoading = false;
   bool _obscurePassword = true;
 
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+  void initNotification() {
+    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const settings = InitializationSettings(android: android);
+    flutterLocalNotificationsPlugin.initialize(settings);
+  }
+
   @override
   void initState() {
     super.initState();
+    initNotification();
     // Pengecekan koneksi internet saat halaman pertama kali dibuka
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkConnectionOnInit();
     });
   }
+
+  void showLoginSuccessNotification(String name) async {
+    const androidDetails = AndroidNotificationDetails(
+      'login_channel', 
+      'Login Notif',
+      importance: Importance.high,
+      priority: Priority.high,
+    );
+
+    const notifDetails = NotificationDetails(android: androidDetails);
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      'Login Berhasil',
+      'Selamat datang $name !',
+      notifDetails,
+    );
+  }
+
 
   // Fungsi untuk mengecek koneksi saat inisialisasi
   void _checkConnectionOnInit() {
@@ -197,7 +229,17 @@ class _LoginpageState extends State<Loginpage> {
 
           uid = userCredential.user!.uid;
           print('UID: $uid');
+          DocumentSnapshot userDoc = await FirebaseFirestore.instance
+              .collection('users')
+              .doc(uid)
+              .get();
 
+          if (userDoc.exists) {
+            String name = userDoc['name'];
+            showLoginSuccessNotification(name);
+            print('Nama pengguna: $name');
+          }
+          
           if (mounted) {
             Navigator.pushReplacement(
               context,

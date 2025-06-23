@@ -47,12 +47,23 @@ dependencies:
 
   # internet connectivity
   connectivity_plus: ^5.0.2
+
+  # notifikasi bos
+  flutter_local_notifications: ^19.3.0
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/launcher.png"
+  adaptive_icon_foreground: "assets/fore.png"
+  adaptive_icon_background: "#060a56"
 
 flutter:
   uses-material-design: true

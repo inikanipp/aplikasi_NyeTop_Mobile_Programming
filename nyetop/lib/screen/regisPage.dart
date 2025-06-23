@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../service/apiService.dart';
 import '../service/firebaseauthservice.dart';
 import 'mainPage.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class ThirdPage extends StatefulWidget {
   @override
@@ -30,6 +31,39 @@ class _ThirdPageState extends State<ThirdPage> {
   bool _isLoading = false;
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+  void initNotification() {
+    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const settings = InitializationSettings(android: android);
+    flutterLocalNotificationsPlugin.initialize(settings);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initNotification();
+  }
+
+  void showLoginSuccessNotification() async {
+  const androidDetails = AndroidNotificationDetails(
+    'login_channel', 
+    'Login Notif',
+    importance: Importance.high,
+    priority: Priority.high,
+  );
+
+  const notifDetails = NotificationDetails(android: androidDetails);
+
+  await flutterLocalNotificationsPlugin.show(
+    0,
+    'Register Berhasil',
+    'Selamat datang $_name !',
+    notifDetails,
+  );
+}
 
   @override
   void dispose() {
@@ -68,6 +102,7 @@ class _ThirdPageState extends State<ThirdPage> {
               print('Warning: API service call failed: $e');
             }
 
+            showLoginSuccessNotification();
             if (mounted) {
               showDialog(
                 context: context,

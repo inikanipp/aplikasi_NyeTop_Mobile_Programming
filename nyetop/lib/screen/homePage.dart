@@ -6,9 +6,8 @@ import 'package:nyetop/screen/loginPage.dart';
 import 'package:nyetop/screen/ProfilPage.dart';
 import 'package:nyetop/widget/navbar.dart';
 import 'package:nyetop/widget/card.dart';
-import 'package:nyetop/widget/serachBar.dart';
-import 'package:nyetop/screen/addItems.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nyetop/screen/addItems.dart';
 import '../service/imageService.dart';
 import '../widget/wishlist_badge.dart';
 import 'package:nyetop/shared/theme.dart';
@@ -27,6 +26,7 @@ class _HomePageState extends State<HomePage> {
   String? _base64Image;
   bool _isLoading = true;
   String _userName = "Agus";
+  String _searchKeyword = "";
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
           .collection('users')
           .doc(widget.id_user)
           .get();
-      
+
       if (userDoc.exists) {
         Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
         setState(() {
@@ -54,6 +54,26 @@ class _HomePageState extends State<HomePage> {
         _isLoading = false;
       });
     }
+  }
+
+  Widget searchBar() {
+    return TextField(
+      onChanged: (value) {
+        setState(() {
+          _searchKeyword = value.toLowerCase();
+        });
+      },
+      decoration: InputDecoration(
+        hintText: 'Cari laptop...',
+        prefixIcon: Icon(Icons.search),
+        filled: true,
+        fillColor: Colors.grey[200],
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide.none,
+        ),
+      ),
+    );
   }
 
   @override
@@ -134,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                         child: IconButton(
-                          onPressed: () async {
+                          onPressed: () {
                             Navigator.pushNamed(context, '/notifications');
                           },
                           icon: SvgPicture.asset(
@@ -172,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(width: 13),
                     GestureDetector(
                       onTap: () {
-                        _showFilterDialog();
+                        setState(() {}); // trigger pencarian ulang
                       },
                       child: Container(
                         padding: const EdgeInsets.all(16),
@@ -182,9 +202,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(32),
                           color: const Color(0xFF060A56),
                         ),
-                        child: SvgPicture.asset(
-                          "assets/icons/nonactive/filter.svg",
-                        ),
+                        child: Icon(Icons.search, color: Colors.white),
                       ),
                     ),
                   ],
@@ -197,8 +215,7 @@ class _HomePageState extends State<HomePage> {
                           .collection('laptops')
                           .snapshots(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
                           return Center(
                             child: Image.asset("assets/images/load.gif"),
                           );
@@ -206,28 +223,32 @@ class _HomePageState extends State<HomePage> {
 
                         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                           return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.laptop_mac,
-                                  size: 80,
-                                  color: Colors.grey[400],
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  'Belum ada laptop tersedia',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 16,
-                                    color: Colors.grey[600],
-                                  ),
-                                ),
-                              ],
+                            child: Text(
+                              'Belum ada laptop tersedia.',
+                              style: GoogleFonts.poppins(fontSize: 16),
                             ),
                           );
                         }
 
-                        final laptops = snapshot.data!.docs;
+                        final allLaptops = snapshot.data!.docs;
+
+                        final laptops = allLaptops.where((doc) {
+                          final data = doc.data() as Map<String, dynamic>;
+                          final nama = (data['nama'] ?? '').toString().toLowerCase();
+                          return nama.contains(_searchKeyword);
+                        }).toList();
+
+                        if (laptops.isEmpty) {
+                          return Center(
+                            child: Text(
+                              'Laptop tidak ditemukan.',
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          );
+                        }
 
                         return RefreshIndicator(
                           onRefresh: () async {
@@ -236,27 +257,24 @@ class _HomePageState extends State<HomePage> {
                           child: GridView.builder(
                             physics: const AlwaysScrollableScrollPhysics(),
                             itemCount: laptops.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               crossAxisSpacing: 10,
                               mainAxisSpacing: 10,
                               childAspectRatio: 182 / 234,
                             ),
                             itemBuilder: (context, index) {
-                              final data =
-                                  laptops[index].data() as Map<String, dynamic>;
+                              final data = laptops[index].data() as Map<String, dynamic>;
                               final String docId = laptops[index].id;
 
                               return GestureDetector(
                                 onTap: () {
-                                  // Kirim semua data laptop ke detail page
                                   Navigator.pushNamed(
                                     context,
                                     '/laptop-detail',
                                     arguments: {
                                       'laptopId': docId,
-                                      'laptopData': data, // Kirim semua data
+                                      'laptopData': data,
                                       'nama': data['nama'] ?? 'Unknown',
                                       'harga': data['harga']?.toString() ?? '0',
                                       'deskripsi': data['deskripsi'] ?? '',
@@ -273,8 +291,7 @@ class _HomePageState extends State<HomePage> {
                                 child: FutureBuilder<Image?>(
                                   future: _imageService.fetchGambar(docId),
                                   builder: (context, snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
+                                    if (snapshot.connectionState == ConnectionState.waiting) {
                                       return cardLaptop(
                                         judul: data['nama'] ?? 'Unknown',
                                         harga: data['harga']?.toString() ?? '0',
@@ -283,7 +300,7 @@ class _HomePageState extends State<HomePage> {
                                           child: CircularProgressIndicator(),
                                         ),
                                         itemId: docId,
-                                        laptopData: data, // Tambahkan ini
+                                        laptopData: data,
                                       );
                                     }
 
@@ -302,7 +319,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                         itemId: docId,
-                                        laptopData: data, // Tambahkan ini
+                                        laptopData: data,
                                       );
                                     }
 
@@ -312,7 +329,7 @@ class _HomePageState extends State<HomePage> {
                                       deskripsi: data['deskripsi'] ?? '',
                                       imageWidget: snapshot.data!,
                                       itemId: docId,
-                                      laptopData: data, // Tambahkan semua data laptop
+                                      laptopData: data,
                                     );
                                   },
                                 ),
@@ -346,64 +363,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-    );
-  }
-
-  void _showFilterDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'Filter Laptop',
-            style: GoogleFonts.poppins(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                title: Text('Harga Terendah'),
-                onTap: () {
-                  Navigator.pop(context);
-                  // Implement filter logic
-                },
-              ),
-              ListTile(
-                title: Text('Harga Tertinggi'),
-                onTap: () {
-                  Navigator.pop(context);
-                  // Implement filter logic
-                },
-              ),
-              ListTile(
-                title: Text('Terbaru'),
-                onTap: () {
-                  Navigator.pop(context);
-                  // Implement filter logic
-                },
-              ),
-              ListTile(
-                title: Text('Terlama'),
-                onTap: () {
-                  Navigator.pop(context);
-                  // Implement filter logic
-                },
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Tutup'),
-            ),
-          ],
-        );
-      },
     );
   }
 }

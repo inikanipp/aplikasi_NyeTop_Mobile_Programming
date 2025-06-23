@@ -10,7 +10,9 @@ import 'editItemScreen.dart';
 
 class yourItems extends StatefulWidget {
   final String idUser;
-  const yourItems({super.key, required this.idUser});
+  yourItems({super.key, required this.idUser});
+
+  
 
   @override
   State<yourItems> createState() => _yourItemsState();
@@ -18,7 +20,7 @@ class yourItems extends StatefulWidget {
 
 class _yourItemsState extends State<yourItems> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final ImageService imageService = ImageService();
+  final ImageService _imageService = ImageService();
 
   Future<List<DocumentSnapshot>> getLaptopData() async {
     QuerySnapshot snapshot = await _firestore
@@ -413,6 +415,7 @@ class _yourItemsState extends State<yourItems> {
                       itemCount: docs.length,
                       itemBuilder: (context, index) {
                         var data = docs[index].data() as Map<String, dynamic>;
+                        final String docId = docs[index].id;
                         return GestureDetector(
                           onTap: () => _showOptionsDialog(context, docs[index]),
                           child: Container(
@@ -430,11 +433,43 @@ class _yourItemsState extends State<yourItems> {
                               ],
                               color: Colors.white,
                             ),
-                            child: Cardhorizontal(
-                              judul: data['nama'],
-                              harga: data['harga'],
-                              deskripsi: data['deskripsi'],
-                            ),
+                            child: FutureBuilder<Image?>(
+                                  future: _imageService.fetchGambar(docId),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                        return Cardhorizontal(
+                                        imageWidget: Image.asset("assets/images/load.gif"),
+                                        judul: data['nama'],
+                                        harga: data['harga'],
+                                        deskripsi: data['deskripsi'],
+                                      );
+                                    }
+
+                                    if (!snapshot.hasData) {
+                                      return Cardhorizontal(
+                                      imageWidget:const Icon(
+                                            Icons.broken_image,
+                                            size: 50,
+                                            color: Colors.grey,
+                                          ),
+                                      judul: data['nama'],
+                                      harga: data['harga'],
+                                      deskripsi: data['deskripsi'],
+                                    );
+                                    }
+
+                                    return Cardhorizontal(
+                                      imageWidget: snapshot.data!,
+                                      judul: data['nama'],
+                                      harga: data['harga'],
+                                      deskripsi: data['deskripsi'],
+                                    );
+                                  },
+                                ),
+                            
+                            
+                            
                           ),
                         );
                       },
